@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body{
+    font-size: 16px;
+}
+
+:root{
+    --white: #ffffff;
+    --black: #000000;
+    --blue: #0058b6;
+    --font-size-20px: 20px;
+    --font-size-24px: 24px;
+}

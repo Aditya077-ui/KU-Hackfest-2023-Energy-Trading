@@ -1,9 +1,13 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import Login from './auth'
+import {Link, Navigate, useNavigate} from "react-router-dom"
 
 
 
-function Hero() {
+
+const Hero = () => {
+    const navigate = useNavigate();
     const styles = {
         bgGradient:
             'bg-gradient-to-br to-orange-600/20 via-fuchsia-600/20 from-indigo-600/20',
@@ -32,6 +36,12 @@ function Hero() {
             x: 0,
             opacity: 1,
         },
+    }
+
+   
+    const navigateToSignup = () => {
+        console.log('hello');
+        navigate("/auth");
     }
 
     return (
@@ -67,20 +77,21 @@ function Hero() {
                         <motion.h1
                             variants={childVariants}
                             className='text-5xl font-bold max-w-lg leading-normal text-black'
+                            style={{fontSize:"48px"}}
                         >
-                            Solar Energy Trading 
+                            Solar Energy Trading
                         </motion.h1>
                         {/* Paragraph */}
-                        <motion.p variants={childVariants} className='max-w-lg leading-6 text-black'>
-                            We are a huge marketplace dedicated to connecting great artists of
+                        <motion.p variants={childVariants} className='max-w-lg leading-6 text-black' style={{fontSize:"20px"}}>
+                            We are a huge marketplace dedicated to connecting great artist of
                             all around the world with their fans and unique token collectors!
                         </motion.p>
                         {/* CTA */}
-                        
-                        <motion.button variants={childVariants} className={styles.btn}>
+                        <motion.button variants={childVariants} className={styles.btn} onClick={navigateToSignup} style={{fontSize:"20px"}}>
+                            Connect to Metamask
                         </motion.button>
-                      
                     </motion.div>
+                    
                     </div>
                 </div>
                 

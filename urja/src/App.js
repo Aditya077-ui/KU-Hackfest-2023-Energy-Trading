@@ -2,14 +2,32 @@ import logo from './logo.svg';
 import './App.css';
 import Navbar from './components/navbar';
 import Hero from './components/hero';
+import Auth_func from './Pages/Signup';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Login from './components/auth';
+import React from 'react';
 
 function App() {
   return (
     <>
-    <Navbar/>
-    <Hero/>
+    <BrowserRouter>
+    <Routes>
+      <Route 
+      path="/"
+      element={
+        <React.Fragment>
+          <Navbar/>
+          <Hero/>
+        </React.Fragment>
+      }
+      />
+      <Route 
+      path="/auth"
+      element={<Auth_func />}
+      />
+    </Routes>
+    </BrowserRouter>
     </>
-    
   );
 }
 
