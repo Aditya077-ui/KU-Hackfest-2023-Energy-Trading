@@ -11,6 +11,7 @@ import {
     mobileFlexContainer,
     mobileLinkVariants,
 } from '../Animations/mobilenav'
+import "./navbar.css";
 function Navbar() {
     const [nav, setNav] = useState(false)
 
@@ -31,57 +32,31 @@ function Navbar() {
         <>
             <nav className='fixed top-0 w-full z-50 p-4 bg-white shadow-xl'>
                 <div className='container mx-auto max-w-6xl relative'>
-                    {/* Flex Container */}
-
                     <motion.div
                         variants={parentVariants}
                         initial='hidden'
                         animate='show'
-                        className='flex justify-between items-center text-white'
+                        className='navbarContent'
                     >
-                        {/* Logo */}
                         <motion.h1
                             variants={childVariants}
-                            className='text-2xl font-bold uppercase text-transparent bg-clip-text bg-black'
+                            className='text-2xl font-bold uppercase text-transparent bg-clip-text bg-black nav-logo'
                         >
+                            <img src={require('./urja_logo.png')} alt="Urja Logo" className='logoImage'/>
                             <Link href="/"><span className=''>Urja</span></Link>
                         </motion.h1>
                         <motion.h1
                             variants={childVariants}
                             className='text-2xl font-bold text-transparent bg-clip-text bg-black'
                         >
-                            <span className=''>Solar Energy Trading</span> Marketplace
+                            <span className=''>Energy Trading</span> Marketplace
                         </motion.h1>
-                        {/* Menu Items */}
-                        <motion.div
-                            variants={childVariants}
-                            className='hidden lg:flex space-x-6 text-sm items-center'
-                        >
-                            {/* {navLinks.map((link, idx) => {
-                                return (
-                                    <a key={idx} href='#' className={styles.navLink}>
-                                        {link}
-                                    </a>
-                                )
-                            })} */}
-
-                            
-
-                            
-                        </motion.div>
-                        {/* Hamburger Menu */}
                         <motion.div
                             variants={childVariants}
                             className='lg:hidden'
                             onClick={toggleNav}
                         >
-                            {/* {nav ? (
-                                <IoClose size={28} className='text-white' />
-                            ) : (
-                                <AiOutlineMenu size={25} />
-                            )} */}
                         </motion.div>
-                        {/* Mobile Menu */}
                         <AnimatePresence>
                             {nav && (
                                 <motion.div
@@ -95,18 +70,6 @@ function Navbar() {
                                         variants={mobileFlexContainer}
                                         className='flex flex-col items-center space-y-6 '
                                     >
-                                        {/* {navLinks.map((link, idx) => {
-                                            return (
-                                                <motion.a
-                                                    variants={mobileLinkVariants}
-                                                    key={idx}
-                                                    href='#'
-                                                    className={styles.mobileNavLink}
-                                                >
-                                                    {link}
-                                                </motion.a>
-                                            )
-                                        })} */}
                                     </motion.div>
                                 </motion.div>
                             )}

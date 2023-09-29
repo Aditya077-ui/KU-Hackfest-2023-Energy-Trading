@@ -1,0 +1,50 @@
+/* Login.css */
+.loginPage{
+    display: flex;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: var(--white);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .form-group {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+  
+  .signup-button {
+    width: 100%;
+    padding: 10px;
+    margin-top:30px;
+    margin-bottom: 20px;
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: var(--font-size-20px);
+  }
+  
+  .signup-button:hover {
+    background-color: var(--blue);
+  }
+  

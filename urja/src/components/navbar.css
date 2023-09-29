@@ -1,0 +1,16 @@
+.nav-logo{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logoImage{
+    width: 50px;
+}
+
+.navbarContent{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content:space-between;
+}
