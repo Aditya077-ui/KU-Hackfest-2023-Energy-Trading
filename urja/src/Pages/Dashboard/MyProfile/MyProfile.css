@@ -1,0 +1,38 @@
+.myProfile {
+    display: flex;
+}
+
+.myProfileTitle{
+  width: 100%;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.myProfileCard {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    width: 450px;
+    height: 220px;
+    margin: 40px;
+  }
+
+  
+  /* Add additional styles as needed */
+  
+  .myProfileButton {
+    width: 300px;
+    padding: 20px;
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: var(--font-size-20px);
+  }
+  
+  .myProfileButton:hover {
+    background-color: var(--blue);
+  }

@@ -6,6 +6,9 @@ import Auth_func from './Pages/Signup';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './components/auth';
 import React from 'react';
+import MyProfile from './Pages/Dashboard/MyProfile/MyProfile.js';
+import MarketPlace from './Pages/Dashboard/MarketPlace/MarketPlace';
+import MyHome from './Pages/Dashboard/MyHome/MyHome';
 
 function App() {
   return (
@@ -24,6 +27,18 @@ function App() {
       <Route 
       path="/auth"
       element={<Auth_func />}
+      />
+      <Route 
+        path="/myprofile"
+        element={<MyProfile />}
+      />
+      <Route 
+        path="/marketplace"
+        element={<MarketPlace/>}
+      />
+      <Route 
+        path="/myhome"
+        element={<MyHome/>}
       />
     </Routes>
     </BrowserRouter>
