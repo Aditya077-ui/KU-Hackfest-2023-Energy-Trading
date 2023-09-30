@@ -36,8 +36,13 @@ function Card({ data}) {
       // if(pvtAddress == myAddress){
       //   window.alert('You cannot use buy from your own account')
       // }
-      const transferAmount = ethers.utils.parseEther(amount);
-      const transaction = await contract.transferFunds(pvtAddress, transferAmount);
+    
+      // const amountInWei = ethers.utils.parseEther(amount);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const sender = await signer.getAddress();
+      const transaction = await contract.transferFunds(pvtAddress, amount)
+      // const receipt = await transaction.wait();
       await transaction.wait();
 
       window.alert('You cannot use buy from your own account')
