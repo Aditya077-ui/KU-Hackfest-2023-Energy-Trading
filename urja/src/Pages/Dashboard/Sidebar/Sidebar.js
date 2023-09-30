@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import "./Sidebar.css";
-
+import axios from 'axios'
 export default function Sidebar() {
     const navigate = useNavigate();
 
@@ -14,7 +14,25 @@ export default function Sidebar() {
         <ul>
           <li onClick={() => {navigate("/myprofile")}}>MyProfile</li>
           <li onClick={() => {navigate("/myhome")}}>MyHome</li>
-          <li onClick={() => {navigate("/marketplace")}}>Marketplace</li>
+          <li onClick={async() => {
+            
+            try {
+              
+              const response = await axios.get('http://localhost:5000/api/sales/listing/fetch').then((data)=> {
+                console.log(data)
+                navigate('/marketplace',{state:{data: data.data}})
+            })
+              
+        
+        
+            } catch (error) {
+              console.error('Error fetching data:', error);
+            }
+                  
+            
+            // navigate("/marketplace")
+            
+            }}>Marketplace</li>
         </ul>
       </div>
   )

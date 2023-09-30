@@ -1,15 +1,13 @@
-import React from "react";
-import "./MyProfile.css";
-import Sidebar from "../Sidebar/Sidebar";
-import {
-  FaBatteryFull,
-  FaBolt,
-  FaMoneyBill,
-  FaThermometer,
-  FaTint,
-} from "react-icons/fa";
 
-function Card({ icon, label, value }) {
+import './MyProfile.css';
+import Sidebar from '../Sidebar/Sidebar';
+import { FaBatteryFull, FaBolt, FaMoneyBill, FaThermometer, FaTint } from 'react-icons/fa';
+import {useLocation} from 'react-router-dom';
+import React, { useState } from 'react';
+import axios  from 'axios';
+function Card({icon,label , value }) {
+   
+
   return (
     <div className="myProfileCard">
       <div className="card-icon">{icon}</div>
@@ -23,7 +21,47 @@ function Card({ icon, label, value }) {
   );
 }
 
-function MyProfile() {
+function MyProfile(prop) {
+
+  const [textBoxValue, setTextBoxValue] = useState('');
+
+  const location = useLocation();
+  // const navigate = useNavigate();
+
+  const handleTextBoxChange = (event) => {
+    setTextBoxValue(event.target.value);
+  };
+
+  const handleSubmit = async () => {
+    // try {
+    //   console.log(location.state.pvtAddress)
+    //   console.log(textBoxValue)
+    //   console.log(location.state.user.houseNo)
+      
+
+
+    //   const response = await axios.post('http://localhost:5000/api/sales/listing/add', {
+    //       "pvtAddress" : location.state.user.pvtAddress,
+    //       "amount": textBoxValue,
+    //       "houseNo": location.state.user.houseNo
+    //   });
+    //   window.alert('Operation Successful!');
+    // } catch (error) {
+    //   console.log(error);
+    // }
+ 
+      try {
+        
+        const response = await axios.get('http://localhost:5000/api/sales/listing/fetch')
+        console.log(response.data)
+  
+  
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    
+  };
+
   const cardData = [
     {
       icon: <FaBolt color="orange" />,
@@ -56,21 +94,23 @@ function MyProfile() {
     <div className="myProfile">
       <Sidebar />
       <div className="main-content">
-        <h1 className="myProfileTitle">My Profile</h1>
-        <div className="card-container">
-          {cardData.map((data, index) => (
-            <Card
-              key={index}
-              icon={data.icon}
-              label={data.label}
-              value={data.value}
-            />
-          ))}
-        </div>
-        {/* Add the button below all the cards */}
-        <div className="myProfileButtonContainer">
-          <button type="button" className="myProfileButton">
-            Sell Energy
+       
+       <h1 className='myProfileTitle'>My Profile</h1>
+       <div className='card-container'>
+        {cardData.map((data, index) => (
+          <Card key={index} icon={data.icon} label={data.label} value={data.value} />
+        ))}
+       </div>
+         {/* Add the button below all the cards */}
+         <input
+        type="text"
+        value={textBoxValue}
+        onChange={handleTextBoxChange}
+        placeholder="Type something..."
+      />
+         <div className="myProfileButtonContainer">
+          <button type="button" className="myProfileButton" onClick={handleSubmit}>
+           Sell Energy
           </button>
         </div>
       </div>

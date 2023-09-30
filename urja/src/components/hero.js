@@ -4,6 +4,8 @@ import {Link, Navigate, useNavigate} from "react-router-dom"
 import React, { useState } from 'react';
 import { ethers } from 'ethers'
 import axios from 'axios';
+
+
 // import { useHistory } from 'react-router-dom';
 
 const Hero = () => {
@@ -15,11 +17,11 @@ const Hero = () => {
         try {
             // console.log(address)
             
-            const response = await axios.post('http://localhost:4000/api/user/signin', {
+            const response = await axios.post('http://localhost:5000/api/user/signin', {
                 "pvtAddress" : address,
                 
             });
-            navigateToDashboard(address)
+            await navigateToDashboard(address)
 
           } catch (error) {
             navigateToSignup(address)
@@ -104,9 +106,21 @@ const Hero = () => {
 
     
     }
-    const navigateToDashboard = (address) => {
-
-        navigate('/mypage',{state:{pvtAddress: address}});
+    const navigateToDashboard = async (address) => {
+        try {
+            console.log(address);
+           
+            const response = await axios.get(`http://localhost:5000/api/user/me/${address}`);
+        // fetch('http://localhost:5000/api/user/me')
+        // .then((response) => response.json())
+        // .then((data) => console.log(data));
+        navigate('/myprofile',{state:{user: response.data}});
+   
+            console.log(response.data.userName)
+          } catch (error) {
+            console.log(error);
+          }
+        // navigate('/myprofile',{state:{pvtAddress: address}});
 
     
     }

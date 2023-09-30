@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.post("/signup", signUp);
 router.post("/signin", signIn);
-router.get("/exists", userExists);
+router.get("/exists/:pvtAddress", userExists);
 router.get("/me/:pvtAddress", userProfile);
 
 module.exports = router;

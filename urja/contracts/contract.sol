@@ -1,30 +1,21 @@
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity >=0.4.20;
 
-contract FundTransfer {
-    address public owner;
+contract TransferEther {
 
-    constructor() {
-        owner = msg.sender;
-    }
+    function transferEther(address payable recipient, uint256 amount) public payable{
+    require(amount <= address(this).balance, "Insufficient balance");
 
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Only the owner can call this function");
-        _;
-    }
+    // Method 1: Using the transfer function
+    recipient.transfer(amount);
 
-    function transferFunds(address payable _to, uint256 _amount) external onlyOwner {
-        require(_to != address(0), "Invalid recipient address");
-        require(_amount > 0, "Amount must be greater than zero");
-        require(address(this).balance >= _amount, "Insufficient balance in the contract");
+    // Method 2: Using the send function
+    bool success = recipient.send(amount);
+    require(success, "Transfer failed");
 
-        (bool success, ) = _to.call{value: _amount}("");
-        require(success, "Transfer failed");
+    // Method 3: Using the call function
+    (bool callSuccess, ) = recipient.call{value: amount}("");
+    require(callSuccess, "Transfer failed");
+}
 
-        emit FundsTransferred(msg.sender, _to, _amount);
-    }
-
-    receive() external payable {}
-
-    event FundsTransferred(address indexed from, address indexed to, uint256 amount);
 }
