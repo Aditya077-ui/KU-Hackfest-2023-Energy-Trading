@@ -3,7 +3,7 @@ import './MyProfile.css';
 import Sidebar from '../Sidebar/Sidebar';
 import { FaBatteryFull, FaBolt, FaMoneyBill, FaThermometer, FaTint } from 'react-icons/fa';
 import {useLocation} from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios  from 'axios';
 function Card({icon,label , value }) {
    
@@ -31,62 +31,69 @@ function MyProfile(prop) {
   const handleTextBoxChange = (event) => {
     setTextBoxValue(event.target.value);
   };
+  const [data, setData] = useState(null);
+
+  
 
   const handleSubmit = async () => {
-    // try {
-    //   console.log(location.state.pvtAddress)
-    //   console.log(textBoxValue)
-    //   console.log(location.state.user.houseNo)
+    try {
+      console.log(location.state.pvtAddress)
+      console.log(textBoxValue)
+      console.log(location.state.user.houseNo)
       
-
-
-    //   const response = await axios.post('http://localhost:5000/api/sales/listing/add', {
-    //       "pvtAddress" : location.state.user.pvtAddress,
-    //       "amount": textBoxValue,
-    //       "houseNo": location.state.user.houseNo
-    //   });
-    //   window.alert('Operation Successful!');
-    // } catch (error) {
-    //   console.log(error);
-    // }
- 
-      try {
-        
-        const response = await axios.get('http://localhost:5000/api/sales/listing/fetch')
-        console.log(response.data)
-  
-  
-      } catch (error) {
-        console.error('Error fetching data:', error);
+      if(location.state.data.totalProduced > textBoxValue){
+        const response = await axios.post('http://localhost:5000/api/sales/listing/add', {
+          "pvtAddress" : location.state.user.pvtAddress,
+          "amount": textBoxValue,
+          "houseNo": location.state.user.houseNo
+      });
+      window.alert('Operation Successful!');
+      }else{
+        window.alert('you dont have enough energy');
       }
+
+      
+    } catch (error) {
+      console.log(error)
+    }
+ 
+      // try {
+        
+      //   const response = await axios.get('http://localhost:5000/api/sales/listing/fetch')
+      //   console.log(response.data)
+  
+  
+      // } catch (error) {
+      //   console.error('Error fetching data:', error);
+      // }
     
   };
 
   const cardData = [
     {
       icon: <FaBolt color="orange" />,
-      label: "Total Energy Produced perKWH",
-      value: 50,
+      label: "Total Energy Produced in KWH",
+      value: location.state.data.totalProduced,
     },
     {
       icon: <FaTint color="Red" />,
       label: "Total Energy Consumed perKWH",
-      value: 50,
+      value: location.state.data.totalConsumed,
     },
     {
       icon: <FaMoneyBill color="green" />,
       label: "Total Energy Sold",
-      value: 50,
+      value: location.state.data.totalSold,
     },
     {
       icon: <FaThermometer color="blue" />,
       label: "Total Energy Bought",
-      value: 50,
+      value: location.state.data.totalBought,
     },
     {
       icon: <FaBatteryFull color="" />,
       label: "Battery health",
-      value: 50,
+      value: `${location.state.data.batteryHealth} / ${location.state.data.maxCapacity}`,
     },
   ];
 

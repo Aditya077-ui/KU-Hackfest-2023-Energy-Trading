@@ -114,7 +114,15 @@ const Hero = () => {
         // fetch('http://localhost:5000/api/user/me')
         // .then((response) => response.json())
         // .then((data) => console.log(data));
-        navigate('/myprofile',{state:{user: response.data}});
+
+
+              const energyresponse = await axios.get(`http://localhost:5000/api/energy/data/${address}`);
+              console.log(energyresponse.data)
+            
+            
+        
+      
+            navigate('/myprofile',{state:{user: response.data, pvtAddress: address, data: energyresponse.data}});
    
             console.log(response.data.userName)
           } catch (error) {

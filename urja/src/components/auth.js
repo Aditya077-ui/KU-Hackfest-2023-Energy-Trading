@@ -31,6 +31,12 @@ const Login = (props) => {
           "pvtAddress" : location.state.pvtAddress,
           "houseNo": formData.homeId
       });
+
+      await axios.post('http://localhost:5000/api/energy/setup', {
+          
+          "pvtAddress" : location.state.pvtAddress,
+         
+      });
       navigate('/myprofile',{state:{pvtAddress: location.state.pvtAddress}});
     } catch (error) {
       console.log(error);
