@@ -26,7 +26,7 @@ const Login = (props) => {
   const signIn = async () => {
     try {
 
-      const response = await axios.post('http://localhost:8000/api/user/signup', {
+      const response = await axios.post('http://localhost:5000/api/user/signup', {
           "userName": formData.username,
           "pvtAddress" : location.state.pvtAddress,
           "houseNo": formData.homeId

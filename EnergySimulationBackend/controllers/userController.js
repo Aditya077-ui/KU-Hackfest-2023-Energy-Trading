@@ -27,7 +27,7 @@ exports.signIn = async (req, res) => {
 };
 
 exports.userExists = async (req, res) => {
-  const pvtAddress = req.body.pvtAddress;
+  const pvtAddress = req.params.pvtAddress;
   const user = await User.findOne({ pvtAddress: pvtAddress });
   if (!user) return res.status(400).json({ message: "User doesnot exists" });
   res.status(200).json({ message: "User exists" });

@@ -10,7 +10,7 @@ const {
 } = require("../controllers/energyController");
 const router = express.Router();
 
-router.get("/data", energyData);
+router.get("/data/:pvtAddress", energyData);
 router.put("/produced", updateEnergyProduced);
 router.put("/consumed", updateEnergyConsumed);
 router.put("/sold", updateEnergySold);

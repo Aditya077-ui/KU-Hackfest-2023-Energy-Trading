@@ -33,7 +33,8 @@ exports.cancelListing = async (req, res) => {
 };
 
 exports.canBuy = async (req, res) => {
-  const { sellerPvtAddress, amount } = req.body.params;
+  const sellerPvtAddress  = req.params.sellerPvtAddress;
+  const amount  = req.params.amount;
 
   const sellerEnergy = await Energy.findOne({ pvtAddress: sellerPvtAddress });
 

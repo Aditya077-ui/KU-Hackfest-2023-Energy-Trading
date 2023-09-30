@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 env.config();
 
 exports.energyData = async (req, res) => {
-  const data = await Energy.findOne({ pvtAddress: req.body.pvtAddress });
+  const data = await Energy.findOne({ pvtAddress: req.params.pvtAddress });
   if (!data) return res.status(404).json({ message: "No energy data" });
   return res.status(200).json(data);
 };
