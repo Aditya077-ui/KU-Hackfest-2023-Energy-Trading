@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 const env = require("dotenv");
 const Joi = require("joi");
 env.config();

@@ -1,6 +1,5 @@
 const { User, validate } = require("../models/user");
 const env = require("dotenv");
-const bcrypt = require("bcrypt");
 const { response } = require("express");
 env.config();
 

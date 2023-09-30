@@ -17,10 +17,7 @@ exports.updateEnergyProduced = async (req, res) => {
     const { energy, pvtAddress, date, time } = req.body;
     let data = null;
     const checkData = await Energy.findOne({ pvtAddress: pvtAddress });
-    if (
-      checkData["totalProduced"] + checkData["energyBought"] + energy >
-      checkData["maxCapacity"]
-    ) {
+    if (checkData["batteryHealth"] + energy > checkData["maxCapacity"]) {
       data = await Energy.findOneAndUpdate(
         { pvtAddress: pvtAddress },
         {
@@ -28,17 +25,12 @@ exports.updateEnergyProduced = async (req, res) => {
             energyProduced: {
               date: date,
               time: time,
-              energy:
-                checkData["maxCapacity"] -
-                checkData["totalProdcued"] -
-                checkData["energyBought"],
+              energy: checkData["maxCapacity"] - energy,
             },
           },
           $inc: {
-            totalProduced:
-              checkData["maxCapacity"] -
-              checkData["totalProdcued"] -
-              checkData["energyBought"],
+            totalProduced: checkData["maxCapacity"] - energy,
+            batteryHealth: checkData["maxCapacity"],
           },
         },
         { session: session, new: true }
@@ -56,6 +48,7 @@ exports.updateEnergyProduced = async (req, res) => {
           },
           $inc: {
             totalProduced: energy,
+            batteryHealth: energy,
           },
         },
         { session: session, new: true }
@@ -77,25 +70,47 @@ exports.updateEnergyProduced = async (req, res) => {
 exports.updateEnergyConsumed = async (req, res) => {
   const session = await mongoose.startSession();
   session.startTransaction();
-
   try {
+    let data = null;
     const { energy, pvtAddress, date, time } = req.body;
-    const data = await Energy.findOneAndUpdate(
-      { pvtAddress: pvtAddress },
-      {
-        $push: {
-          energyConsumed: {
-            date: date,
-            time: time,
-            energy: energy,
+    const checkData = await Energy.findOne({ pvtAddress: pvtAddress });
+    if (checkData["batteryHealth"] - energy <= 0) {
+      data = await Energy.findOneAndUpdate(
+        { pvtAddress: pvtAddress },
+        {
+          $push: {
+            energyConsumed: {
+              date: date,
+              time: time,
+              energy: energy,
+            },
+          },
+          $inc: {
+            totalConsumed: energy,
+            batteryHealth: energy * -1,
           },
         },
-        $inc: {
-          totalConsumed: energy,
+        { session: session, new: true }
+      );
+    } else {
+      data = await Energy.findOneAndUpdate(
+        { pvtAddress: pvtAddress },
+        {
+          $push: {
+            energyConsumed: {
+              date: date,
+              time: time,
+              energy: checkData["batteryHealth"],
+            },
+          },
+          $inc: {
+            totalConsumed: checkData["batteryHealth"],
+            batteryHealth: 0,
+          },
         },
-      },
-      { session: session, new: true }
-    );
+        { session: session, new: true }
+      );
+    }
     await session.commitTransaction();
     session.endSession();
     if (!data) return res.status(404).json({ message: "No energy data" });
@@ -112,9 +127,15 @@ exports.updateEnergyConsumed = async (req, res) => {
 exports.updateEnergySold = async (req, res) => {
   const session = await mongoose.startSession();
   session.startTransaction();
-
   try {
     const { energy, pvtAddress, date, time } = req.body;
+    if (checkData["batteryHealth"] - energy <= checkData["maxCapacity"]) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({
+        message: "Not enough energy to sell.",
+      });
+    }
     const data = await Energy.findOneAndUpdate(
       { pvtAddress: pvtAddress },
       {
@@ -127,6 +148,7 @@ exports.updateEnergySold = async (req, res) => {
         },
         $inc: {
           totalSold: energy,
+          batteryHealth: energy * -1,
         },
       },
       { session: session, new: true }
@@ -147,9 +169,17 @@ exports.updateEnergySold = async (req, res) => {
 exports.updateEnergyBought = async (req, res) => {
   const session = await mongoose.startSession();
   session.startTransaction();
+  const checkData = await Energy.findOne({ pvtAddress: pvtAddress });
 
   try {
     const { energy, pvtAddress, date, time } = req.body;
+    if (checkData["batterHealth"] + energy > checkData["maxCapacity"]) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({
+        message: "Max battery capacity reached. Can't buy the alloted energy",
+      });
+    }
     const data = await Energy.findOneAndUpdate(
       { pvtAddress: pvtAddress },
       {
@@ -162,6 +192,7 @@ exports.updateEnergyBought = async (req, res) => {
         },
         $inc: {
           totalBought: energy,
+          batteryHealth: energy,
         },
       },
       { session: session, new: true }
