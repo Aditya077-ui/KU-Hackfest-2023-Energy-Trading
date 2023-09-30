@@ -1,12 +1,21 @@
 import React from 'react';
 import './MyProfile.css';
 import Sidebar from '../Sidebar/Sidebar';
+import { FaBatteryFull, FaBolt, FaMoneyBill, FaThermometer, FaTint } from 'react-icons/fa';
 
-function Card({label , value }) {
+
+
+function Card({icon,label , value }) {
    
   return (
     <div className="myProfileCard">
-      <h2>{label} :<b>{value}</b></h2>
+     <div className="card-icon">
+        {icon}
+      </div>
+      <div className="card-content">
+        <div className="card-label">{label}:</div>
+        <div className="card-value"><b>{value}</b></div>
+      </div>
       
     </div>
   );
@@ -15,25 +24,28 @@ function Card({label , value }) {
 function MyProfile() {
   const cardData = [
     {
+      icon: <FaBolt color='orange'/>,
       label:'Total Energy Produced perKWH' ,
       value:50,
     },
     {
-    
+      icon:<FaTint color='Red'/>,
       label:'Total Energy Consumed perKWH' ,
       value:50,
      
     },
     {
-      
+      icon:<FaMoneyBill color='green'/>,
       label:'Total Energy Sold' ,
       value:50,
     },
     {
+      icon:<FaThermometer color='blue'/>,
       label:'Total Energy Bought' ,
       value:50,
     },
     {
+      icon:<FaBatteryFull color=''/>,
       label:'Battery health' ,
       value:50,
     },
@@ -49,7 +61,7 @@ function MyProfile() {
        <h1 className='myProfileTitle'>My Profile</h1>
        <div className='card-container'>
         {cardData.map((data, index) => (
-          <Card key={index} label={data.label} value={data.value} />
+          <Card key={index} icon={data.icon} label={data.label} value={data.value} />
         ))}
        </div>
          {/* Add the button below all the cards */}
