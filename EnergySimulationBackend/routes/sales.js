@@ -5,6 +5,7 @@ const {
   canBuy,
   updateListing,
   fetchListing,
+  completeTransaction,
 } = require("../controllers/salesController");
 const router = express.Router();
 
@@ -13,5 +14,6 @@ router.put("/listing/cancel", cancelListing);
 router.get("/canbuy", canBuy);
 router.put("/listing/update", updateListing);
 router.get("/listing/fetch", fetchListing);
+router.get("/listing/transaction/complete", completeTransaction);
 
 module.exports = router;

@@ -60,10 +60,62 @@ exports.updateListing = async (req, res) => {
 };
 
 exports.fetchListing = async (req, res) => {
-  const { id } = req.body;
   const salesData = await Sales.find({
     status: { $eq: "unsold" },
   });
-  //   if (!data) return res.status(404).json([]);
   return res.status(200).json(salesData);
+};
+
+exports.completeTransaction = async (req, res) => {
+  const { buyerPvtAddress, sellerPvtAddress, amount } = req.body;
+  const session = await mongoose.startSession();
+  session.startTransaction();
+  try {
+    await Energy.findOneAndUpdate(
+      {
+        pvtAddress: buyerPvtAddress,
+      },
+      {
+        $push: {
+          energyBought: {
+            date: date,
+            time: time,
+            energy: amount,
+          },
+        },
+        $inc: {
+          totalBought: amount,
+          batteryHealth: amount,
+        },
+      },
+      { session: session, new: true }
+    );
+
+    await Energy.findOneAndUpdate(
+      { pvtAddress: sellerPvtAddress },
+      {
+        $push: {
+          energySold: {
+            date: date,
+            time: time,
+            energy: amount,
+          },
+        },
+        $inc: {
+          totalSold: amount,
+          batteryHealth: amount * -1,
+        },
+      },
+      { session: session, new: true }
+    );
+    await session.commitTransaction();
+    session.endSession();
+    return res.status(200).json({ message: "Transaction completed" });
+  } catch (ex) {
+    await session.abortTransaction();
+    session.endSession();
+    return res
+      .status(400)
+      .json({ message: "Error! operation couldnot be performed" });
+  }
 };
