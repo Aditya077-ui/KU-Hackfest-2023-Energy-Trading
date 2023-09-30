@@ -12,7 +12,7 @@ const router = express.Router();
 router.post("/listing/add", addListing);
 router.put("/listing/cancel", cancelListing);
 router.get("/canbuy/:sellerPvtAddress/:amount", canBuy);
-router.put("/listing/update/:id", updateListing);
+router.put("/listing/update", updateListing);
 router.get("/listing/fetch", fetchListing);
 router.put("/listing/transaction/complete", completeTransaction);
 

@@ -45,7 +45,7 @@ exports.canBuy = async (req, res) => {
 };
 
 exports.updateListing = async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.body;
   const salesData = await Sales.findByIdAndUpdate(
     id,
     {
