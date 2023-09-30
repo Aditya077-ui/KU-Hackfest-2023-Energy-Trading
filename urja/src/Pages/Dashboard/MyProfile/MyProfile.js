@@ -24,28 +24,28 @@ function Card({icon,label , value }) {
 function MyProfile() {
   const cardData = [
     {
-      icon: <FaBolt/>,
+      icon: <FaBolt color='orange'/>,
       label:'Total Energy Produced perKWH' ,
       value:50,
     },
     {
-      icon:<FaTint/>,
+      icon:<FaTint color='Red'/>,
       label:'Total Energy Consumed perKWH' ,
       value:50,
      
     },
     {
-      icon:<FaMoneyBill/>,
+      icon:<FaMoneyBill color='green'/>,
       label:'Total Energy Sold' ,
       value:50,
     },
     {
-      icon:<FaThermometer/>,
+      icon:<FaThermometer color='blue'/>,
       label:'Total Energy Bought' ,
       value:50,
     },
     {
-      icon:<FaBatteryFull/>,
+      icon:<FaBatteryFull color=''/>,
       label:'Battery health' ,
       value:50,
     },

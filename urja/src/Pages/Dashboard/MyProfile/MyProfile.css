@@ -41,6 +41,10 @@
       transition: transform 0.2s ease-in-out;
    } 
     
+   .card-value{
+    font-size: 50px;
+   
+   }
    .myProfileCard:hover .card-icon {
     transform: scale(1.2); 
 
