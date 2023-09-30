@@ -12,26 +12,39 @@
 .card-container{
   display:flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+ 
 }
 .myProfileCard {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-    width: 40%;
-    height: auto;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    height: 50%;
     margin: 10px;
-    padding-top: 10px;
+    padding-top: 30px;
     padding-bottom: 10px;
     padding-left: 40px;
-   
-    
-    
-  }
+    position:relative;
+    transition: transform 0.2s ease-in-out;
+}
 
-  
+.myProfileCard:hover {
+  transform: translateY(-5px); /* Add a slight lift on hover for a realistic touch */
+}
+
+.card-icon {
+      position: absolute;
+      top: 10px; /* Adjust the top position as needed */
+      left: 10px; /* Adjust the right position as needed */
+      font-size: 24px; /* Adjust the icon size as needed */
+      transition: transform 0.2s ease-in-out;
+   } 
+    
+   .myProfileCard:hover .card-icon {
+    transform: scale(1.2); 
+
+   }
   /* Add additional styles as needed */
   
   .myProfileButton {
