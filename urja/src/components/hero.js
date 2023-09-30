@@ -1,12 +1,71 @@
-import React from 'react'
 import { motion } from 'framer-motion'
 import Login from './auth'
 import {Link, Navigate, useNavigate} from "react-router-dom"
-
-
-
+import React, { useState } from 'react';
+import { ethers } from 'ethers'
+import axios from 'axios';
+// import { useHistory } from 'react-router-dom';
 
 const Hero = () => {
+    const [account, setAccount] = useState('')
+    // const history = useHistory()
+
+
+    async function signIn(address) {
+        try {
+            // console.log(address)
+            
+            const response = await axios.post('http://localhost:8000/api/user/signup', {
+                "pvtAddress" : address,
+                
+            });
+            console.log('navigate to dashboard')
+
+          } catch (error) {
+            navigateToSignup(address)
+          }
+        }
+      
+    async function connectToMetaMask() {
+        // Check if MetaMask is installed
+        if (typeof window.ethereum === 'undefined') {
+        alert('Please install MetaMask to use this application.');
+        return null;
+        }
+    
+        // Connect to MetaMask
+        try {
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        const address = await signer.getAddress();
+        return address;
+        } catch (error) {
+        console.error('Error connecting to MetaMask:', error.message);
+        return null;
+        }
+    }
+    
+    
+    async function handleConnect() {
+        const walletAddress = await connectToMetaMask();
+      
+        if (walletAddress) {
+            // console.log(walletAddress)
+            // setAccount(walletAddress)
+            // console.log(account)
+            await signIn(walletAddress)
+        //   console.log('Connected to MetaMask. Wallet Address:', walletAddress);
+        } else {
+          // MetaMask not installed or connection failed
+          console.log('Failed to connect to MetaMask.');
+        }
+      }
+    
+
+
+
+
     const navigate = useNavigate();
     const styles = {
         bgGradient:
@@ -39,9 +98,11 @@ const Hero = () => {
     }
 
    
-    const navigateToSignup = () => {
-        console.log('hello');
-        navigate("/auth");
+    const navigateToSignup = (address) => {
+
+        navigate('/auth',{state:{pvtAddress: address}});
+
+    
     }
 
     return (
@@ -87,7 +148,7 @@ const Hero = () => {
                             all around the world with their fans and unique token collectors!
                         </motion.p>
                         {/* CTA */}
-                        <motion.button variants={childVariants} className={styles.btn} onClick={navigateToSignup} style={{fontSize:"20px"}}>
+                        <motion.button variants={childVariants} className={styles.btn} onClick={handleConnect} style={{fontSize:"20px"}}>
                             Connect to Metamask
                         </motion.button>
                     </motion.div>
