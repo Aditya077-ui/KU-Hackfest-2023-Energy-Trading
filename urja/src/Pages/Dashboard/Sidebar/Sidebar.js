@@ -9,7 +9,7 @@ export default function Sidebar() {
   return (
     <div className="sidebar">
         <div className="logoContainer">
-          <img src={require("./urja_logo.png")} className='dashboardLogo' alt="Logo"></img>
+          <img src={require("./Asset.png")} className='dashboardLogo' alt="Logo"></img>
         </div>
         <ul>
           <li onClick={() => {navigate("/myprofile")}}>MyProfile</li>
