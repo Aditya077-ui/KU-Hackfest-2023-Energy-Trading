@@ -10,8 +10,7 @@ const salesSchema = new mongoose.Schema(
       required: true,
     },
     houseNo: {
-      type: Number,
-      default: 0,
+      type: String,
     },
     status: {
       type: String,

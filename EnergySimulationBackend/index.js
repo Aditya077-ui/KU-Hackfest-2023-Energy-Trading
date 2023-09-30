@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const env = require("dotenv");
 const users = require("./routes/users");
 const energy = require("./routes/energy");
+const sales = require("./routes/sales");
 const cors = require("cors");
 
 const app = express();
@@ -30,6 +31,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/user", users);
 app.use("/api/energy", energy);
+app.use("/api/sales", sales);
 // app.use(error);
 
 app.listen(process.env.PORT, () => {

@@ -15,11 +15,11 @@ const Hero = () => {
         try {
             // console.log(address)
             
-            const response = await axios.post('http://localhost:8000/api/user/signup', {
+            const response = await axios.post('http://localhost:4000/api/user/signin', {
                 "pvtAddress" : address,
                 
             });
-            console.log('navigate to dashboard')
+            navigateToDashboard(address)
 
           } catch (error) {
             navigateToSignup(address)
@@ -101,6 +101,12 @@ const Hero = () => {
     const navigateToSignup = (address) => {
 
         navigate('/auth',{state:{pvtAddress: address}});
+
+    
+    }
+    const navigateToDashboard = (address) => {
+
+        navigate('/mypage',{state:{pvtAddress: address}});
 
     
     }

@@ -34,7 +34,7 @@ exports.userExists = async (req, res) => {
 };
 
 exports.userProfile = async (req, res) => {
-  const user = await User.findOne({ pvtAddress: req.body.pvtAddress });
+  const user = await User.findOne({ pvtAddress: req.params.pvtAddress });
   if (!user) return res.status(400).json({ message: "User doesnot exist" });
   res.status(200).json(user);
 };

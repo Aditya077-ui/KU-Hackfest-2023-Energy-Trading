@@ -99,7 +99,7 @@ async function main() {
       .finally(function () {
         // always executed
       });
-    await delay(60000);
+    await delay(10000);
     // break;
   }
   i++;
