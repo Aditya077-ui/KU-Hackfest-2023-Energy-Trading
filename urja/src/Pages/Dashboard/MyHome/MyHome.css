@@ -127,7 +127,7 @@ input:checked + .slider:before {
 }
 
 .image, .image1, .image2 {
-  flex: 1;
+    flex:1;
   text-align: center;
   padding: 10px;
 }

@@ -9,14 +9,26 @@
   text-align: center;
 }
 
+.card-container{
+  display:flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
 .myProfileCard {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-    width: 450px;
-    height: 220px;
-    margin: 40px;
+    width: 40%;
+    height: auto;
+    margin: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 40px;
+   
+    
+    
   }
 
   
@@ -24,7 +36,8 @@
   
   .myProfileButton {
     width: 300px;
-    padding: 20px;
+    padding: 10px;
+
     background-color: var(--blue);
     color: var(--white);
     border: none;
@@ -36,3 +49,15 @@
   .myProfileButton:hover {
     background-color: var(--blue);
   }
+
+  .submit-button{
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* MyProfile.css */
+.myProfileButtonContainer {
+  justify-content: center; /* Horizontally center */
+  align-items: center; /* Vertically center */
+  margin-top: 20px; /* Adjust margin as needed */
+}
