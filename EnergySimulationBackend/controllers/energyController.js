@@ -30,7 +30,8 @@ exports.updateEnergyProduced = async (req, res) => {
           },
           $inc: {
             totalProduced: checkData["maxCapacity"] - energy,
-            batteryHealth: checkData["maxCapacity"],
+            batteryHealth:
+              checkData["maxCapacity"] - checkData["batteryHealth"],
           },
         },
         { session: session, new: true }
@@ -82,12 +83,12 @@ exports.updateEnergyConsumed = async (req, res) => {
             energyConsumed: {
               date: date,
               time: time,
-              energy: energy,
+              energy: checkData["batteryHealth"],
             },
           },
           $inc: {
-            totalConsumed: energy,
-            batteryHealth: energy * -1,
+            totalConsumed: checkData["batteryHealth"],
+            batteryHealth: checkData["batteryHealth"] * -1,
           },
         },
         { session: session, new: true }
@@ -100,12 +101,12 @@ exports.updateEnergyConsumed = async (req, res) => {
             energyConsumed: {
               date: date,
               time: time,
-              energy: checkData["batteryHealth"],
+              energy: energy,
             },
           },
           $inc: {
-            totalConsumed: checkData["batteryHealth"],
-            batteryHealth: 0,
+            totalConsumed: energy,
+            batteryHealth: energy * -1,
           },
         },
         { session: session, new: true }
