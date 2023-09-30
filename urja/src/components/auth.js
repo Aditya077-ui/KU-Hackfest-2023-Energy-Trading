@@ -1,41 +1,57 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import "./auth.css"; // Import your custom CSS file
+import axios from 'axios';
+import {useLocation} from 'react-router-dom';
+import {Link, Navigate, useNavigate} from "react-router-dom"
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      homeId: "",
-    };
-  }
+const Login = (props) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  // const { data } = props.location.state;
+  const [formData, setFormData] = useState({
+    username: "",
+    homeId: "",
+  });
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     // You can perform form submission or validation logic here
     // For example, you can send the data to a server or update the state
   };
 
-  render() {
-    return (
-      <div className="loginPage">
-        <div className="login-container">
+  const signIn = async () => {
+    try {
+
+      const response = await axios.post('http://localhost:8000/api/user/signup', {
+          "userName": formData.username,
+          "pvtAddress" : location.state.pvtAddress,
+          "houseNo": formData.homeId
+      });
+      navigate('/myprofile',{state:{pvtAddress: location.state.pvtAddress}});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <div className="loginPage">
+      <div className="login-container">
         <div className='flex justify-center items-center'>
-      <img src={require('./Asset.png')} alt="Urja Logo" className='logoImage' />
-    </div>
-        <form onSubmit={this.handleSubmit}>
+          <img src={require('./Asset.png')} alt="Urja Logo" className='logoImage' />
+        </div>
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Username:</label>
             <input
               type="text"
               id="username"
               name="username"
-              value={this.state.username}
-              onChange={this.handleChange}
+              value={formData.username}
+              onChange={handleChange}
               required
             />
           </div>
@@ -45,19 +61,18 @@ class Login extends Component {
               type="text"
               id="homeId"
               name="homeId"
-              value={this.state.homeId}
-              onChange={this.handleChange}
+              value={formData.homeId}
+              onChange={handleChange}
               required
             />
           </div>
-          <button type="submit" className="signup-button">
+          <button type="submit" className="signup-button" onClick={signIn}>
             Signup
           </button>
         </form>
       </div>
-      </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Login;

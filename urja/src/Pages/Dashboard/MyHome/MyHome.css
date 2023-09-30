@@ -1,6 +1,8 @@
 .myHome {
     display: flex;
+    justify-content: space-between;
 }
+
 .main-content {
     width: calc(100% - 200px); /* Adjust width to account for sidebar */
     padding: 20px;
@@ -14,7 +16,7 @@
 
 .myHomeTitle{
     width: 100%;
-    font-size: 28px;
+    font-size: 30px;
     font-weight: bold;
     text-align: center;
   }
@@ -97,10 +99,11 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-.row1{
+.row1, .row2, row3{
     display: flex;
     margin-top: 40px;
     margin-bottom: 40px;
+    margin-left: 40px;
     justify-content: space-around;
     font-size: 24px;
     font-weight: bold;
@@ -108,22 +111,23 @@ input:checked + .slider:before {
 }
 
 .toggle-button{
-    
     width: 150px;
     height: 40px;
 }
 
 .row2{
-    display: flex;
+    display: row;
     justify-content: space-around;
 }
 
+
 .bulb-image{
-    width: 100px;
+    width: 50%;
     object-fit: contain;
 }
 
-.house-image{
-    width: 600px;
-    object-fit: cover;
+.image, .image1, .image2 {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
 }
