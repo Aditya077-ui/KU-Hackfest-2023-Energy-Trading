@@ -3,6 +3,12 @@ import Sidebar from '../Sidebar/Sidebar';
 import './MyHome.css';
 import lightmode from "./lightmode.png"
 import darkmode from "./Darkmode.png"
+import tv_off from './tv_off.png';
+import tv_on from './tv_on.png';
+import fan_on from './fan_on.gif';
+import fan_off from './fan_off.png';
+import ref_on from './ref_on.png';
+import ref_off from './ref_off.png';
 
 export default function MyHome() {
   const [isBulbOn, setIsBulbOn] = useState(false);
@@ -81,7 +87,7 @@ return (
 <div className = "row1">
  <div className="image">
   <img
-    src={isFanOn ? lightmode : darkmode}
+    src={isFanOn ? fan_on : fan_off}
     alt={isFanOn ? 'On Bulb' : 'Off Bulb'}
     className="bulb-image"
   />
@@ -92,7 +98,7 @@ return (
 
  <div className="image1">
   <img
-    src={isTvOn ? lightmode : darkmode}
+    src={isTvOn ? tv_on : tv_off}
     alt={isTvOn ? 'On Bulb' : 'Off Bulb'}
     className="bulb-image"
   />
@@ -103,7 +109,7 @@ return (
 
  <div className="image2">
   <img
-    src={IsRefOn ? lightmode : darkmode}
+    src={IsRefOn ? ref_on : ref_off}
     alt={IsRefOn ? 'On Bulb' : 'Off Bulb'}
     className="bulb-image"
   />
