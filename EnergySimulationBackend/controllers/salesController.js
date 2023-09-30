@@ -54,9 +54,9 @@ exports.updateListing = async (req, res) => {
     },
     { new: true }
   );
-  if (!data)
+  if (!salesData)
     return res.status(404).json({ message: "No listing found for given id" });
-  return res.status(200).json(data);
+  return res.status(200).json(salesData);
 };
 
 exports.fetchListing = async (req, res) => {
