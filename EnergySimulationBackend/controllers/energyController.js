@@ -15,22 +15,52 @@ exports.updateEnergyProduced = async (req, res) => {
   session.startTransaction();
   try {
     const { energy, pvtAddress, date, time } = req.body;
-    const data = await Energy.findOneAndUpdate(
-      { pvtAddress: pvtAddress },
-      {
-        $push: {
-          energyProduced: {
-            date: date,
-            time: time,
-            energy: energy,
+    let data = null;
+    const checkData = await Energy.findOne({ pvtAddress: pvtAddress });
+    if (
+      checkData["totalProduced"] + checkData["energyBought"] + energy >
+      checkData["maxCapacity"]
+    ) {
+      data = await Energy.findOneAndUpdate(
+        { pvtAddress: pvtAddress },
+        {
+          $push: {
+            energyProduced: {
+              date: date,
+              time: time,
+              energy:
+                checkData["maxCapacity"] -
+                checkData["totalProdcued"] -
+                checkData["energyBought"],
+            },
+          },
+          $inc: {
+            totalProduced:
+              checkData["maxCapacity"] -
+              checkData["totalProdcued"] -
+              checkData["energyBought"],
           },
         },
-        $inc: {
-          totalProduced: energy,
+        { session: session, new: true }
+      );
+    } else {
+      data = await Energy.findOneAndUpdate(
+        { pvtAddress: pvtAddress },
+        {
+          $push: {
+            energyProduced: {
+              date: date,
+              time: time,
+              energy: energy,
+            },
+          },
+          $inc: {
+            totalProduced: energy,
+          },
         },
-      },
-      { session: session, new: true }
-    );
+        { session: session, new: true }
+      );
+    }
     await session.commitTransaction();
     session.endSession();
     if (!data) return res.status(404).json({ message: "No energy data" });

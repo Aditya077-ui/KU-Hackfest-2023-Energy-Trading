@@ -1,3 +1,5 @@
+const axios = require("axios");
+
 function generateSolarEnergyData() {
   // Constants for the energy range and total energy goal
   const minTotalEnergy = 1100; // 1.1 kW
@@ -66,13 +68,41 @@ function calculateSolarFactor(hour, minute) {
   const solarFactor = Math.exp(-(deviation ** 2) / (2 * peakWidth ** 2));
   return solarFactor;
 }
-
-// Example usage
-const solarData = generateSolarEnergyData();
-console.log(solarData);
-
-let sum = 0;
-for (let data of solarData) {
-  sum += data["energy"];
+// Freezes the program for given amount of time
+function delay(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
 }
-console.log(sum);
+
+async function main() {
+  let i = 0;
+  // while (i < 2) {
+  let energy = generateSolarEnergyData();
+  for (let e in energy) {
+    const currentTime = new Date();
+    axios
+      .put("http://localhost:4000/api/energy/produced", {
+        pvtAddress: "aaaaaaaaaa",
+        date: `${currentTime.getFullYear()}:${
+          currentTime.getMonth() + 1
+        }:${currentTime.getDay()}`,
+        time: `${currentTime.getHours()}:${currentTime.getMinutes()}:${currentTime.getSeconds()}`,
+        energy: e / 1000,
+      })
+      .then(function (response) {
+        // handle success
+        // console.log(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+    await delay(60000);
+    // break;
+  }
+  i++;
+  // }
+}
+main();
