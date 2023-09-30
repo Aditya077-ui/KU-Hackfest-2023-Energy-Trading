@@ -108,6 +108,7 @@ input:checked + .slider:before {
 }
 
 .toggle-button{
+    
     width: 150px;
     height: 40px;
 }

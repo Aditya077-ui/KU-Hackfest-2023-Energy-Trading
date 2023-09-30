@@ -42,7 +42,7 @@ function Navbar() {
                             variants={childVariants}
                             className='text-2xl font-bold uppercase text-transparent bg-clip-text bg-black nav-logo'
                         >
-                            <img src={require('./urja_logo.png')} alt="Urja Logo" className='logoImage'/>
+                            <img src={require('./Asset.png')} alt="Urja Logo" className='logoImage'/>
                             <Link href="/"><span className=''>Urja</span></Link>
                         </motion.h1>
                         <motion.h1
