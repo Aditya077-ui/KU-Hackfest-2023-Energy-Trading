@@ -8,6 +8,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import io
 import base64
+# from flask_cors import CORS, cross_origin
+# cors = CORS(app)
+# app.config['CORS_HEADERS'] = 'Content-Type'
+plt.switch_backend('agg')
 
 app = flask.Flask(__name__)
 
@@ -29,6 +33,11 @@ def predict_next_five_days():
     for pred in preds:
         scaled_back_preds.append(scaler_model.inverse_transform(np.array([pred]).reshape(-1, 1)))
     return scaled_back_preds        
+
+@app.route("/", methods=["GET"])
+def say_hi():
+    return "<h1>Hi...</h1>"
+
     
 @app.route("/predict/5days", methods=["GET"])
 def next_5_days():
@@ -41,11 +50,15 @@ def next_5_days():
                         status=200,
                        )
     
-@app.route("/graph/energy/usage/last15days", methods=["GET"])
+@app.route("/graph/energy/usage/last10days", methods=["GET"])
 def generate_graph_for_last_month():
     df = pd.read_csv('PJME_hourly.csv')
-    df = df.iloc[144264: 144622]
+    df = df.iloc[144384: 144623]
+    # df["Datetime"] = df["Datetime"].apply(lambda x: (x.split())[0])
+    # df["Datetime"] = df["Datetime"].apply(lambda x: (x.split("-"))[2])
     ax = sns.lineplot(data=df, x="Datetime", y="PJME_MW")
+    ax.set_xticklabels([], rotation=30,
+                           ha='right', fontsize=7)
     plt.title("Energy usage in the last 15 days")
     plt.xlabel("Date")
     plt.ylabel("Power in Watts")
@@ -55,7 +68,51 @@ def generate_graph_for_last_month():
     bytes_image.seek(0)
     b64string = base64.b64encode(bytes_image.read())
     res = {
-        "preds": b64string.decode('utf8')
+        "graph": b64string.decode('utf8')
+    }
+    response = flask.Response(flask.json.dumps(res),
+                        status=200,
+                        mimetype='application/json'
+                        )
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "*")
+    response.headers.add("Access-Control-Allow-Methods", "*")
+    return response
+    
+@app.route("/graph/energy/usage/lastyear", methods=["GET"])
+def generate_graph_for_last_year():
+    df = pd.read_csv('PJME_hourly.csv')
+    df["Datetime"] = df["Datetime"].apply(lambda x: x.split()[0])
+    df["Year"] = df["Datetime"].apply(lambda x: x.split("-")[0])
+    df["Month"] = df["Datetime"].apply(lambda x: x.split("-")[1])
+    df["Day"] = df["Datetime"].apply(lambda x: x.split("-")[2])
+    df = df[df["Year"] == "2011" ]
+    monthy_total_power = [sum(df[df["Month"] == "01" ]["PJME_MW"]) / 100, 
+            sum(df[df["Month"] == "02" ]["PJME_MW"])/ 100, 
+            sum(df[df["Month"] == "03" ]["PJME_MW"])/ 100, 
+            sum(df[df["Month"] == "04" ]["PJME_MW"])/ 100, 
+            sum(df[df["Month"] == "05" ]["PJME_MW"])/ 100, 
+            sum(df[df["Month"] == "06" ]["PJME_MW"])/ 100, 
+            sum(df[df["Month"] == "07" ]["PJME_MW"])/ 100, 
+            sum(df[df["Month"] == "08" ]["PJME_MW"])/ 100, 
+            sum(df[df["Month"] == "09" ]["PJME_MW"])/ 100,
+            sum(df[df["Month"] == "10" ]["PJME_MW"])/ 100,
+            sum(df[df["Month"] == "11" ]["PJME_MW"])/ 100,
+            sum(df[df["Month"] == "12" ]["PJME_MW"])/ 100]
+    
+    months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"]
+        
+    ax = sns.barplot(x=months, y=monthy_total_power)
+    plt.title("Energy usage each month last year")
+    plt.xlabel("Month")
+    plt.ylabel("Power in kW")
+    plt.tight_layout()
+    bytes_image = io.BytesIO()
+    plt.savefig(bytes_image, format='png')
+    bytes_image.seek(0)
+    b64string = base64.b64encode(bytes_image.read())
+    res = {
+        "graph": b64string.decode('utf8')
     }
     return flask.Response(flask.json.dumps(res),
                         status=200,
