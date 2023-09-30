@@ -25,7 +25,7 @@ class Login extends Component {
       <div className="loginPage">
         <div className="login-container">
         <div className='flex justify-center items-center'>
-      <img src={require('./urja_logo.png')} alt="Urja Logo" className='logoImage' />
+      <img src={require('./Asset.png')} alt="Urja Logo" className='logoImage' />
     </div>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
