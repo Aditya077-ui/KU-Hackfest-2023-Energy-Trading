@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 const env = require("dotenv");
 const Joi = require("joi");
 env.config();
@@ -13,6 +12,10 @@ const energySchema = new mongoose.Schema(
     maxCapacity: {
       type: Number,
       default: 25,
+    },
+    batteryHealth: {
+      type: Number,
+      default: 0,
     },
     totalProduced: {
       type: Number,
