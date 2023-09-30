@@ -10,11 +10,8 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
     "bootstrap-icons": "^1.11.1",
-<<<<<<< HEAD
     "cors": "^2.8.5",
     "ethers": "^5.7.2",
-=======
->>>>>>> 969c53ba2b713d79b5278e93e21922a1a34e1e85
     "framer-motion": "^10.16.4",
     "react": "^18.2.0",
     "react-avatar": "^5.0.3",

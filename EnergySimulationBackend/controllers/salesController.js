@@ -33,8 +33,8 @@ exports.cancelListing = async (req, res) => {
 };
 
 exports.canBuy = async (req, res) => {
-  const sellerPvtAddress  = req.params.sellerPvtAddress;
-  const amount  = req.params.amount;
+  const sellerPvtAddress = req.params.sellerPvtAddress;
+  const amount = req.params.amount;
 
   const sellerEnergy = await Energy.findOne({ pvtAddress: sellerPvtAddress });
 
@@ -45,7 +45,7 @@ exports.canBuy = async (req, res) => {
 };
 
 exports.updateListing = async (req, res) => {
-  const { id } = req.body;
+  const id = req.params.id;
   const salesData = await Sales.findByIdAndUpdate(
     id,
     {
