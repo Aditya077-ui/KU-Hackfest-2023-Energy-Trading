@@ -1,0 +1,39 @@
+
+  
+.sidebar {
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    position: fixed;
+    height: 100%;
+    text-align: center;
+    overflow-y: auto;
+  }
+
+.logoContainer{
+    display: flex;
+    justify-content: center;
+    margin: 50px 0 50px 0;
+    width: 100%;
+}
+  
+.dashboardLogo{
+    width: 100px;
+}
+  
+.sidebar ul {
+    list-style-type: none;
+    padding-left: 50px;
+    text-align: left;
+}
+  
+.sidebar li {
+    margin-bottom: 30px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.sidebar li:hover{
+    color: rgb(184, 183, 183);
+}
+  
