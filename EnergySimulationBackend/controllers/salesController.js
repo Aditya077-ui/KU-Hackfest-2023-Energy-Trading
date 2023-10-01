@@ -72,6 +72,11 @@ exports.completeTransaction = async (req, res) => {
   const session = await mongoose.startSession();
   session.startTransaction();
   try {
+    let currDate = new Date();
+    const date = `${currDate.getFullYear()}/${
+      currDate.getMonth() + 1
+    }/${currDate.getDay()}`;
+    const time = `${currDate.getHours()}:${currDate.getMinutes()}:${currDate.getSeconds()}`;
     await Energy.findOneAndUpdate(
       {
         pvtAddress: buyerPvtAddress,
@@ -91,7 +96,6 @@ exports.completeTransaction = async (req, res) => {
       },
       { session: session, new: true }
     );
-
     await Energy.findOneAndUpdate(
       { pvtAddress: sellerPvtAddress },
       {

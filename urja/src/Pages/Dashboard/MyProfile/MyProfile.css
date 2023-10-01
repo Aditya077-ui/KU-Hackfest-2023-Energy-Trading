@@ -74,7 +74,15 @@
 
   /* MyProfile.css */
 .myProfileButtonContainer {
-  justify-content: center; /* Horizontally center */
+  justify-content: space-around; /* Horizontally center */
   align-items: center; /* Vertically center */
   margin-top: 20px; /* Adjust margin as needed */
+  position: relative;
+}
+
+.AI-data{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
 }

@@ -147,16 +147,19 @@ function MyProfile(prop) {
             Sell Energy
           </button>
         </div>
+
         <br></br>
-        <div>
-          Power forecasting for next 5 days in Watt:{" "}
-          {JSON.stringify(fiveDaysPred)}`
-        </div>
-        <div>
-          <img src={`data:image/png;base64,${last10Days}`} alt="Graph" />
-        </div>
-        <div>
-          <img src={`data:image/png;base64,${lastYear}`} alt="Graph" />
+        <div className="AI-data">
+          <div>
+            <b>Power forecasting</b> for next 5 days in Watt:{" "}
+            {JSON.stringify(fiveDaysPred)}`
+          </div>
+          <div>
+            <img src={`data:image/png;base64,${last10Days}`} alt="Graph" />
+          </div>
+          <div>
+            <img src={`data:image/png;base64,${lastYear}`} alt="Graph" />
+          </div>
         </div>
       </div>
     </div>
