@@ -15,7 +15,7 @@ const energySchema = new mongoose.Schema(
     },
     batteryHealth: {
       type: Number,
-      default: 0,
+      default: 10,
     },
     totalProduced: {
       type: Number,
@@ -49,7 +49,7 @@ const energySchema = new mongoose.Schema(
         },
         units: {
           type: String,
-          default: "Watts",
+          default: "kW",
         },
         _id: false,
       },
@@ -70,7 +70,7 @@ const energySchema = new mongoose.Schema(
         },
         units: {
           type: String,
-          default: "Watts",
+          default: "kW",
         },
         _id: false,
       },

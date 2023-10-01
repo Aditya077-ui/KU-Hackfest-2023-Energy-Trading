@@ -81,7 +81,7 @@ async function main() {
     const currentTime = new Date();
     axios
       .put("http://localhost:4000/api/energy/produced", {
-        pvtAddress: "aaaaaaaaaa",
+        pvtAddress: "0x6AD8F9fDcA62AFf56848fe9B0139A55A3F70AB3b",
         date: `${currentTime.getFullYear()}:${
           currentTime.getMonth() + 1
         }:${currentTime.getDay()}`,
@@ -90,7 +90,7 @@ async function main() {
       })
       .then(function (response) {
         // handle success
-        console.log(response);
+        // console.log(response);
       })
       .catch(function (error) {
         // handle error

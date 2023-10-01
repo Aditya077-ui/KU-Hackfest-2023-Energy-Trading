@@ -167,7 +167,7 @@ export default function MyHome() {
               />
               <button className="toggle-button" onClick={toggleBulb}>
                 {isBulbOn ? turnBulbOn() : () => {}}
-                {!isBulbOn? "Turn On" : "Turn Off"}
+                {!isBulbOn ? "Turn On" : "Turn Off"}
               </button>
             </div>
 
@@ -179,7 +179,6 @@ export default function MyHome() {
               />
               <button className="toggle-button" onClick={toggleBulb1}>
                 {isBulbOn1 ? "Turn Off" : "Turn On"}
-                
               </button>
             </div>
 
@@ -204,7 +203,7 @@ export default function MyHome() {
               />
               <button className="toggle-button" onClick={toggleFan}>
                 {isFanOn ? turnFanOn() : () => {}}
-                {!isFanOn? "Turn On" : "Turn Off"}
+                {!isFanOn ? "Turn On" : "Turn Off"}
               </button>
             </div>
 
@@ -216,7 +215,7 @@ export default function MyHome() {
               />
               <button className="toggle-button" onClick={toggleTV}>
                 {isTvOn ? turnTVOn() : () => {}}
-                {!isTvOn? "Turn On" : "Turn Off"}
+                {!isTvOn ? "Turn On" : "Turn Off"}
               </button>
             </div>
 
@@ -228,7 +227,7 @@ export default function MyHome() {
               />
               <button className="toggle-button" onClick={toggleRef}>
                 {IsRefOn ? turnRefOn() : () => {}}
-                {!IsRefOn? "Turn On" : "Turn Off"}
+                {!IsRefOn ? "Turn On" : "Turn Off"}
               </button>
             </div>
           </div>

@@ -18,10 +18,10 @@ SerialPort.list().then((ports) => {
 // Open the serial port
 port.on("open", () => {
   // Wait for the port to be open before sending commands
-  setTimeout(() => {
+  setInterval(() => {
     // Example commands
-    sendCommand("powerToggle homeA 0");
-  }, 2000);
+    sendCommand("getPowerReading");
+  }, 5000);
 });
 
 parser.on("data", (data) => {
